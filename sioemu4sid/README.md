@@ -1,25 +1,9 @@
 # misc
-This is a simple unit test for a custom protocol and two serial ports. One side is connected via a NULL-MODEM
-cable type-of-connection and the other side too.
-The parameters are passed IN THE SAME way one side and another.
+This is a simple SIO protocol written to check if the ARDUINO SIO Protocol works
 
-For example:
+Usage: bin/sioemu /dev/ttyS1
 
-./testunit /dev/ttyS1 /dev/ttyUSB0 1 10 0 0 2 2
-
-usage: ./testunit [SERIAL 1] [SERIAL 2] [SPEED IDX 1] [SPEED IDX 2] [DELAY RTS 1 BEFORE] [DELAY RTS 1 AFTER] [DELAY RTS 2 BEFORE] [DELAY RTS 2 AFTER]
-
-The above example means:
-Thread 1 is using serial port named /dev/ttyS1. Its speed is the indexed 1 (1200 baud) speed rate. NO RTS delay before send (RS485
-struct) and NO RTS delay after sent (RS485 struct)
-
-Thread 2 is using serial port named /dev/ttyUSB0. Its speed is the indexed 10 (230400 baud) speed rate. 2 millisecs of RTS delay
-before send (RS485 struct) and 2 millisecs of RTS delay after sent (RS485 struct)
-
-The protocol is very simple and it is a sort-of ping-pong data transfer. The transfer size is directly proportional to the speed
-data rate, so at low speed (1200 baudrate) the packet size is 480 bytes at it will takes about 4 seconds to go out. In the same way
-increasing the speed will increase the buffer size too, just to have a lot of data transferring between those two ports at the
-same time.
+The protocol is very simple but quite time critical and the USB Serial converter used in the Arduino cannot have some registers needed to startup or stop some delays for SIO protocol. But so far seems to work good. The speed limit is the 19200 baud rate updating 31 bytes every vertical blank and it needs more or less 15/16 msecs to manage a single registers write. So it is quite time critical, but nevertheless it works fairly good.
 
 I hope to be clear enough as English is not my native spoken language.
 
