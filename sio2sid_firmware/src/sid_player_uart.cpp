@@ -279,7 +279,16 @@ static void sio_get_checksum(void)
 #ifdef SID_DEBUG
         debugUART.println("--> NACK");
 #endif
-        sio_nack();
+        // As page 14 of the SIOSPEC pdf documents:
+        // COMMAND FRAME ACKNOWLEDGE
+        // The peripheral being addressed would normally respond to
+        // a command frame by sending an ACK byte ($41) to the computer;
+        // if there is a checksum problem with the command frame, the
+        // peripheral should not respond.
+        // sio_nack();
+        Serial.flush();
+        cmdState = WAIT;
+        cmdTimer = 0;
     }
 }
 
