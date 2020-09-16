@@ -155,7 +155,7 @@ static void setup(void)
 	DoC64Font();
 
 	OS.sdmctl = sdmctl;	// Turn on DMA like before
-    srand(0xdeadbeef);
+	srand(0xdeadbeef);
 }
 //                       ---------.---------.---------.---------.
 const char error_138[] ="       SID EMULATOR NOT RESPONDING   ";
